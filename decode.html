@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>隐写解密</title>
+</head>
+<body>
+<input type="file" id="file">
+<br>
+<img src="" id="preview" alt="" style="display: block;">
+<br>
+<input type="text" id="message">
+<br>
+<button id="decode">解密</button>
+<br>
+<canvas id="canvas"></canvas>
+</body>
+</html>
+<script type="text/javascript" src="imagemask.js"></script>
+<script>
+    var mask = new ImageMask({debug: false});
+    window.onload = function() {
+        var input = document.getElementById('file');
+        input.addEventListener('change', importImage);
+
+        var decodeButton = document.getElementById('decode');
+        decodeButton.addEventListener('click', decode);
+    }
+
+    //解密
+    var decode = function() {
+        var canvas = document.getElementById('canvas');
+        var message = mask.revealText(canvas);
+
+        //将解密后信息显示在text中
+        document.getElementById('message').value = message;
+    };
+
+    var importImage = function(e) {
+        var reader = new FileReader();
+        reader.onload = function(event) {
+            document.getElementById('preview').style.display = 'block';
+            document.getElementById('preview').src = event.target.result;
+            console.log('src',event.target.result);
+            document.getElementById('message').value = '';
+            var img = new Image();
+            img.onload = function() {
+                var canvas = document.getElementById('canvas');
+                var ctx = canvas.getContext('2d');
+                ctx.canvas.width = img.width;
+                ctx.canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+            };
+            img.src = event.target.result;
+        };
+
+        reader.readAsDataURL(e.target.files[0]);
+    };
+
+</script>
