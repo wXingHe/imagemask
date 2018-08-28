@@ -48,6 +48,7 @@ var ImageColorMask = function(colors, opts){
 		var pos = 0;
 		var number = 0;
 		var mix = 0;
+		console.log(this.colors);
 		while(pos < size && offset < this.colors.length){
 			var bit = getBit(this.colors[offset], mix++);
 			number = setBit(number, pos++, bit);
