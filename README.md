@@ -1,4 +1,5 @@
 图片隐写的分离,encode为加密页面,decode为解密页面,分离后便于应用于实际生产环境中
+php版本的解密在decode_php中方便用于PHP后台的直接解密
 
 以下为原作者说明:
 # imagemask
