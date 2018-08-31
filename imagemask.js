@@ -44,22 +44,18 @@ var ImageColorMask = function(colors, opts){
 		}
 	}
 	this.readNumber = function(size){
-		console.log("********************************************************************************************************************************************************************");
 		var bits = opts.debug ? [] : null;
 		var pos = 0;
 		var number = 0;
 		var mix = 0;
-		console.log(this.colors);
 		while(pos < size && offset < this.colors.length){
 			var bit = getBit(this.colors[offset], mix++);
 			number = setBit(number, pos++, bit);
-			console.log(offset,':','value',this.colors[offset],'bit',bit,'number:',number);
 			if(opts.debug)bits.push(bit);
 			while(mix < opts.mixCount && pos < size){
 				bit = getBit(this.colors[offset], mix++);
 				number = setBit(number, pos++, bit);
 				if(opts.debug)bits.push(bit);
-                console.log(offset,':','value',this.colors[offset],'bit',bit,'number:',number);
 			}
 
 			offset ++;
@@ -107,7 +103,6 @@ ImageMask.prototype.revealText = function(canvas){
 	var pixelCount = ctx.canvas.width * ctx.canvas.height;
     var imgData = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
 	var colorMask = new ImageColorMask(imgData.data, this.opts);
-	console.log('colors:',imgData.data)
 	var textLength = colorMask.readNumber(this.opts.lengthSize);
 	if ((this.opts.lengthSize + (textLength * this.opts.charSize)) > (pixelCount * 3 * this.opts.mixCount)) {
 		return '';
