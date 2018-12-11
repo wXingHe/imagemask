@@ -2,6 +2,7 @@
 <html>
  <head>
   <title> index </title>
+  <meta charset="utf-8">	
  </head>
 
  <body>   
@@ -97,10 +98,12 @@ var encode = function() {
     var canvas = document.getElementById('canvas');
 	var debug = document.getElementById('debug');
 	var preview = document.getElementById('preview');
+	console.log('preview:',preview);
 	var ctx = canvas.getContext('2d');
 	ctx.drawImage(preview, 0, 0, preview.width, preview.height);
 
 	mask.opts.debug = debug.checked;
+	console.log('canvas:',canvas);
 	mask.hideText(canvas, message);
     output.src = canvas.toDataURL();
 };

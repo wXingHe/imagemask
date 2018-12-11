@@ -102,21 +102,23 @@ ImageMask.prototype.revealText = function(canvas){
 	var ctx = canvas.getContext('2d');
 	var pixelCount = ctx.canvas.width * ctx.canvas.height;
     var imgData = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
+    console.log('dara:',imgData);
 	var colorMask = new ImageColorMask(imgData.data, this.opts);
 	var textLength = colorMask.readNumber(this.opts.lengthSize);
-	if ((this.opts.lengthSize + (textLength * this.opts.charSize)) > (pixelCount * 3 * this.opts.mixCount)) {
-		return '';
-	}
 
-	if (textLength <= 0) {
+    if ((this.opts.lengthSize + (textLength * this.opts.charSize)) > (pixelCount * 3 * this.opts.mixCount)) {
 		return '';
-	}
+    }
 
-	var text = [];
-	for (var i = 0; i < textLength; i++) {
+    if (textLength <= 0) {
+		return '';
+    }
+
+    var text = [];
+    for (var i = 0; i < textLength; i++) {
 		var code = colorMask.readNumber(this.opts.charSize);
 		text.push(String.fromCharCode(code));
-	}	
+    }
     return text.join('');
 }
 ImageMask.prototype.maxTextLength = function(canvas){
